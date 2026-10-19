@@ -25,7 +25,63 @@ export function ContactPage() { return <PublicLayout><PageHero eyebrow="CONTACT 
 
 export function ResourcesPage() { const articles = [["Dispatch planning","How to prepare useful lane and equipment details before a dispatch conversation."],["Owner-operator workflow","A practical look at the back-office details that often follow a booked load."],["Freight rate context","Questions to bring to a rate conversation before you accept a load."],["Document readiness","An operational checklist for keeping confirmations, BOLs, and PODs organized."],["Truck type guide","What to communicate about your equipment when evaluating dispatch support."],["Revenue planning","Using load details and truck count to create a clearer planning view."]]; return <PublicLayout><PageHero eyebrow="HAULAGE RESOURCES" title="Useful reads for running a more organized operation." copy="Educational articles and carrier guides will be published here as they are reviewed by the Haulage team." /><section className="py-20 sm:py-28"><div className="container grid gap-4 md:grid-cols-2 lg:grid-cols-3">{articles.map(([title,copy], index) => <article key={title} className="flex min-h-64 flex-col rounded-2xl border border-[#081525]/10 bg-white p-6"><span className="text-[10px] font-bold uppercase tracking-[.15em] text-[#56728b]">Guide {String(index + 1).padStart(2,"0")}</span><h2 className="mt-8 font-display text-2xl font-bold">{title}</h2><p className="mt-3 text-sm leading-6 text-slate-600">{copy}</p><span className="mt-auto pt-8 text-xs font-bold uppercase tracking-[.12em] text-slate-400">Coming soon</span></article>)}</div></section></PublicLayout>; }
 
-export function LegalPage({ type }: { type: "privacy" | "terms" | "cookies" }) { const content = { privacy: ["Privacy Policy","This working privacy-policy template will be finalized with Haulage’s approved data practices and legal review before public launch."], terms: ["Terms of Service","This working terms template will be finalized with Haulage’s approved service terms and legal review before public launch."], cookies: ["Cookie Policy","This working cookie-policy template will be finalized with Haulage’s approved cookie and analytics practices before public launch."] }[type]; return <PublicLayout><PageHero eyebrow="LEGAL" title={content[0]} copy={content[1]} /><article className="container max-w-3xl py-20 text-base leading-8 text-slate-600 sm:py-28"><p>Haulage is committed to explaining its policies clearly. The final policy text must identify the business contact details, the information collected through the website, how that information is used, and applicable choices or rights. Until this text is reviewed and formally published, visitors should contact Haulage directly with questions about data or terms.</p><h2 className="mt-10 font-display text-2xl font-bold text-[#081525]">Implementation note</h2><p className="mt-4">This page is intentionally presented as a pre-launch policy placeholder. It must be replaced with legally reviewed language before the public website accepts live customer data.</p></article></PublicLayout>; }
+export function LegalPage({ type }: { type: "privacy" | "terms" | "cookies" }) {
+  const content = {
+    privacy: [
+      "Privacy Policy",
+      "Haulage is committed to protecting personal information and being transparent about how we communicate with carriers and partners.",
+    ],
+    terms: [
+      "Terms of Service",
+      "These terms define the communication and service expectations for dispatch support and account-related messages.",
+    ],
+    cookies: [
+      "Cookie Policy",
+      "This working cookie-policy template will be finalized with Haulage’s approved cookie and analytics practices before public launch.",
+    ],
+  }[type];
+
+  const emailLink = <a href="mailto:haulagedispatchllc1@gmail.com" className="text-[#081525] underline underline-offset-2">haulagedispatchllc1@gmail.com</a>;
+
+  return <PublicLayout>
+    <PageHero eyebrow="LEGAL" title={content[0]} copy={content[1]} />
+    <article className="container max-w-3xl py-20 text-base leading-8 text-slate-600 sm:py-28">
+      {type === "terms" && (
+        <>
+          <p>
+            You agree to receive informational messages (appointment reminders, account notifications, etc.) from Haulage Dispatch. Message frequency varies. Message and data rates may apply. Carriers are not liable for any delayed or undelivered messages. For help, reply HELP or email us at {emailLink}. You can opt out at any time by replying STOP.
+          </p>
+          <h2 className="mt-10 font-display text-2xl font-bold text-[#081525]">Service communication</h2>
+          <p className="mt-4">
+            Haulage may send operational and account-related updates to assist with dispatch coordination, load communication, and service notifications. By engaging with Haulage, you acknowledge that these messages are part of the service communication process and may be sent to the mobile number provided for business communication.
+          </p>
+        </>
+      )}
+
+      {type === "privacy" && (
+        <>
+          <p>
+            No mobile information will be shared with any third parties/affiliates for marketing/promotional purposes. All other categories exclude text messaging originator opt-in data and consent; this information will not be shared with or obtained by any third parties. If you wish to be removed from receiving future communications, you can opt out at any time by texting STOP or contacting us at {emailLink}.
+          </p>
+          <h2 className="mt-10 font-display text-2xl font-bold text-[#081525]">Our privacy commitment</h2>
+          <p className="mt-4">
+            Haulage collects and uses information needed to coordinate dispatch support, respond to inquiries, and send operational updates related to your account. We do not sell or share mobile opt-in data for marketing purposes, and we limit disclosures to the extent necessary to deliver service or comply with legal obligations.
+          </p>
+        </>
+      )}
+
+      {type === "cookies" && (
+        <>
+          <p>
+            Haulage is committed to explaining its policies clearly. The final policy text must identify the business contact details, the information collected through the website, how that information is used, and applicable choices or rights. Until this text is reviewed and formally published, visitors should contact Haulage directly with questions about data or terms.
+          </p>
+          <h2 className="mt-10 font-display text-2xl font-bold text-[#081525]">Implementation note</h2>
+          <p className="mt-4">This page is intentionally presented as a pre-launch policy placeholder. It must be replaced with legally reviewed language before the public website accepts live customer data.</p>
+        </>
+      )}
+    </article>
+  </PublicLayout>;
+}
 
 function PageHero({ eyebrow, title, copy, action }: { eyebrow: string; title: string; copy: string; action?: string }) { return <section className="relative overflow-hidden bg-[#081525] pb-20 pt-40 text-white sm:pb-28"><div className="route-grid absolute inset-0 opacity-45" /><div className="container relative"><p className="text-[11px] font-black uppercase tracking-[.2em] text-[#d8ff40]">{eyebrow}</p><h1 className="mt-5 max-w-4xl font-display text-5xl font-bold leading-[.96] tracking-[-.05em] sm:text-7xl">{title}</h1><p className="mt-6 max-w-2xl text-base leading-7 text-slate-300">{copy}</p>{action && <Link href="/#lead-form"><Button className="mt-8 rounded-full bg-[#d8ff40] font-bold text-[#081525] hover:bg-[#ecff85]">{action} <ArrowRight className="ml-2 h-4 w-4" /></Button></Link>}</div></section>; }
 
